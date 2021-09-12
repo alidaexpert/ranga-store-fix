@@ -1,32 +1,45 @@
-console.log('working')
 const loadProducts = () => {
     const url = `https://fakestoreapi.com/products`;
+    // fetch('https://raw.githubusercontent.com/ProgrammingHero1/ranga-store-api/main/ranga-api.json?fbclid=IwAR3QEMTi2O-4F6-Ey14y222NKwVZ_oK7GWAvTFnctwh2AGCls3VXYpmze0s')
     fetch(url)
         .then((response) => response.json())
         .then((data) => showProducts(data));
 };
-loadProducts();
+
 
 // show all product in UI 
 const showProducts = (products) => {
+    // console.log(products)
     const allProducts = products.map((pd) => pd);
     for (const product of allProducts) {
-        const image = product.images;
+        const image = product.image;
         const div = document.createElement("div");
         div.classList.add("product");
-        div.innerHTML = `<div class="single-product">
-      <div>
-    <img class="product-image" src=${image}></img>
+        div.innerHTML = `<div class="card h-100 single-product">
+      <div class="image-div ">
+    <img class="card-img-top w-50 h-100 p-3 " src="${image}">
       </div>
-      <h3>${product.title}</h3>
+      <div >
+      <h4 class="title">${product.title.slice(0,40)+"..."}</h4>
       <p>Category: ${product.category}</p>
-      <h2>Price: $ ${product.price}</h2>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
+      
+      
+      <h3>Price: $ ${product.price}</h3>
+      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-info text-white">Add to cart</button>
+      <button id="details-btn" class="btn button">Details</button>
+      
+      </div>
+      <div class="rating-div mt-4 pt-2">
+      <p class="rating">Rating: <span> ${product.rating.rate} <i class="far fa-star"></i></span></p>
+      <p class="customer"> ${product.rating.count} <i class="fas fa-user-friends"></i> <span > customer rating this product</span></p>
+      </div>
+      </div>
       `;
         document.getElementById("all-products").appendChild(div);
     }
 };
+
+// product price update on side navbar 
 let count = 0;
 const addToCart = (id, price) => {
     count = count + 1;
@@ -34,11 +47,12 @@ const addToCart = (id, price) => {
 
     updateTaxAndCharge();
     document.getElementById("total-Products").innerText = count;
+    updateTotal()
 };
 
 const getInputValue = (id) => {
     const element = document.getElementById(id).innerText;
-    const converted = parseInt(element);
+    const converted = parseFloat(element);
     return converted;
 };
 
@@ -47,12 +61,12 @@ const updatePrice = (id, value) => {
     const convertedOldPrice = getInputValue(id);
     const convertPrice = parseFloat(value);
     const total = convertedOldPrice + convertPrice;
-    document.getElementById(id).innerText = Math.round(total);
+    document.getElementById(id).innerText = total.toFixed(2);
 };
 
 // set innerText function
 const setInnerText = (id, value) => {
-    document.getElementById(id).innerText = Math.round(value);
+    document.getElementById(id).innerText = value.toFixed(2);
 };
 
 // update delivery charge and total Tax
@@ -74,8 +88,10 @@ const updateTaxAndCharge = () => {
 
 //grandTotal update function
 const updateTotal = () => {
-    const grandTotal =
-        getInputValue("price") + getInputValue("delivery-charge") +
+    const grandTotal = getInputValue("price") + getInputValue("delivery-charge") +
         getInputValue("total-tax");
-    document.getElementById("total").innerText = grandTotal;
+    document.getElementById("total").innerText = grandTotal.toFixed(2);
 };
+updateTotal()
+
+loadProducts();
