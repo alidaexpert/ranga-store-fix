@@ -18,6 +18,10 @@ body {
     box-shadow: 1px 1px 10px rgb(8, 5, 39);
 }
 
+.text-color {
+    color: rgb(255, 249, 194) !important;
+}
+
 
 /* product card section  */
 
