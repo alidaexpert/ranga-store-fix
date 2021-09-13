@@ -59,19 +59,19 @@ const showProductDetails = (data) => {
     console.log(data)
     const div = document.getElementById('product-details')
     div.innerHTML = `
-        <div class="d-flex h-modal">
+        <div class="d-lg-flex h-modal">
         <div class="w-100 h-100 d-flex justify-content-center">
         <img class=" w-50 p-3 " src="${data.image}">
         </div>
 <div class="w-100 px-5 py-2 border border-info rounded-2">
 <div class="d-flex">
 <h4 class="w-90">${data.title} </h4>
-<div class="w-10"> <i class="fas fa-share-alt"></i>
+<div class="w-10 d-flex justify-content-end"> <a href="#" class="text-decoration-none text-secondary"> <i class="fas fa-share-alt share"></i></a>
 </div>
 </div>
 <small class="">${data.description.slice(0,150)+"..."} <a href="#" class="text-decoration-none text-danger">see more</a></small>
 <hr>
-<p class="d-flex"><span class="text-warning">
+<p class="d-lg-flex"><span class="text-warning">
 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span> &nbsp;<span class=""> | &nbsp;
 Rating: ${data.rating.rate} &nbsp; |&nbsp; ${data.rating.count} people rate this product!</span></p>
 <p>Catagories: <span class="text-pink">${data.category}</span></p>
