@@ -26,7 +26,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand fs-3 text-color" href="#"><i class="fab fa-500px"></i><i class="fab fa-affiliatetheme"></i><i class="fab fa-adn"></i> Commerce</a>
+                <a class="navbar-brand fs-2 text-color" href="#"><i class="fab fa-aws"></i><i class="fab fa-apper text-info"></i></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -67,15 +67,32 @@
     <main class="main">
         <!-- search field section  -->
         <div class="my-4">
-            <div class="input-group container w-50 ">
+            <div class="input-group container width-size ">
                 <input id="input-field" class="form-control" type="text" />
                 <button type="button" class="btn button search-button" data-toggle="button" aria-pressed="false" autocomplete="off" id="search-btn" onclick="loadProducts()">
           Search
         </button>
             </div>
         </div>
+        <!-- Modal section -->
+        <div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog width-modal rounded-3">
+                    <div class="modal-content border-modal">
+                        <div class="d-flex justify-content-between align-items-center bg-dark rounded-top px-4 py-2">
+                            <h5 class="text-color"><i class="fab fa-aws"></i><i class="fab fa-apper text-info"></i> </h5>
+                            <h3 class="text-color">Happy Shopping</h3>
+                            <button type="button" class="btn-close bg-warning btn-danger p-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div id="product-details" class="modal-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- products collumn section  -->
-        <div class="row">
+        <div class="row m-0">
             <div class="col-md-9 col-lg-9 col-sm-7">
                 <div id="all-products" class="">
                 </div>

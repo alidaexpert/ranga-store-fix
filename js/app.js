@@ -1,7 +1,12 @@
 const loadProducts = () => {
+    const inputFiled = document.getElementById('input-field')
+    const inputValue = inputFiled.value
+        //    clear 
+    inputFiled.value = ''
+        // fetch 
     const url = `https://fakestoreapi.com/products`;
-    // fetch('https://raw.githubusercontent.com/ProgrammingHero1/ranga-store-api/main/ranga-api.json?fbclid=IwAR3QEMTi2O-4F6-Ey14y222NKwVZ_oK7GWAvTFnctwh2AGCls3VXYpmze0s')
-    fetch(url)
+    fetch('https://raw.githubusercontent.com/ProgrammingHero1/ranga-store-api/main/ranga-api.json?fbclid=IwAR3QEMTi2O-4F6-Ey14y222NKwVZ_oK7GWAvTFnctwh2AGCls3VXYpmze0s')
+        // fetch(url)
         .then((response) => response.json())
         .then((data) => showProducts(data));
 };
@@ -10,6 +15,7 @@ const loadProducts = () => {
 // show all product in UI 
 const showProducts = (products) => {
     // console.log(products)
+
     const allProducts = products.map((pd) => pd);
     for (const product of allProducts) {
         const image = product.image;
@@ -19,14 +25,16 @@ const showProducts = (products) => {
       <div class="image-div ">
     <img class="card-img-top w-50 h-100 p-3 " src="${image}">
       </div>
-      <div >
+
+      <div class="text-div">
+      <div>
       <h4 class="title">${product.title.slice(0,40)+"..."}</h4>
       <p>Category: ${product.category}</p>
       
       
-      <h3>Price: $ ${product.price}</h3>
+      <h3>Price: $${product.price}</h3>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-info text-white">Add to cart</button>
-      <button id="details-btn" class="btn button">Details</button>
+      <button onclick="detailsBtn(${product.id})" class="btn button" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
       
       </div>
       <div class="rating-div mt-4 pt-2">
@@ -34,10 +42,51 @@ const showProducts = (products) => {
       <p class="customer"> ${product.rating.count} <i class="fas fa-user-friends"></i> <span > customer rating this product</span></p>
       </div>
       </div>
+      </div>
       `;
         document.getElementById("all-products").appendChild(div);
     }
 };
+// details button 
+const detailsBtn = id => {
+        const url = `https://fakestoreapi.com/products/${id}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => showProductDetails(data))
+    }
+    // products detail show on modal 
+const showProductDetails = (data) => {
+    console.log(data)
+    const div = document.getElementById('product-details')
+    div.innerHTML = `
+        <div class="d-flex h-modal">
+        <div class="w-100 h-100 d-flex justify-content-center">
+        <img class=" w-50 p-3 " src="${data.image}">
+        </div>
+<div class="w-100 px-5 py-2 border border-info rounded-2">
+<div class="d-flex">
+<h4 class="w-90">${data.title} </h4>
+<div class="w-10"> <i class="fas fa-share-alt"></i>
+</div>
+</div>
+<small class="">${data.description.slice(0,150)+"..."} <a href="#" class="text-decoration-none text-danger">see more</a></small>
+<hr>
+<p class="d-flex"><span class="text-warning">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span> &nbsp;<span class=""> | &nbsp;
+Rating: ${data.rating.rate} &nbsp; |&nbsp; ${data.rating.count} people rate this product!</span></p>
+<p>Catagories: <span class="text-pink">${data.category}</span></p>
+<hr>
+<h2>Price: <span class="text-pink">$${data.price}</span></h2>
+<hr>
+<div class="d-flex gap-2">
+<button class="btn w-50 btn-dark rounded-2 text-center px-4 py-2">Add to cart</button>
+<button class="btn w-50  rounded-2 border border-primary text-center px-4 py-2">Add to wishlist</button>
+</div>
+</div>
+        </div>
+        `
+}
+
 
 // product price update on side navbar 
 let count = 0;
